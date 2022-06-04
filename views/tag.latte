@@ -1,0 +1,16 @@
+{layout '../layouts/default.latte'}
+
+{block header}
+	{if $data->info->detail->profileThumb !== ''}
+	<figure class="figure is-96x96">
+		<img src="{path('/stream?url=' . urlencode($data->info->detail->profileThumb))}" />
+	</figure>
+	{/if}
+	<p class="title">{$data->info->detail->title}</p>
+	<p class="subtitle">{include '../components/rss.latte'}</p>
+	<p>Videos: {number($data->info->stats->videoCount)} / Views: {number($data->info->stats->viewCount)}</p>
+{/block}
+
+{block content}
+	{include '../components/feed.latte'}
+{/block}

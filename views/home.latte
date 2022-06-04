@@ -1,0 +1,40 @@
+{layout '../layouts/hero.latte'}
+
+{block content}
+	<p class="title">Welcome to ProxiTok!</p>
+	<p class="subtitle">An alternative open source frontend for TikTok</p>
+	{embed '../components/form.latte', path: '/redirect', method: 'GET'}
+		{block fields}
+			<div class="field has-addons has-addons-centered">
+				<div class="control">
+					<input class="input" name="term" placeholder="Search" required>
+				</div>
+				<div class="control">
+					<div class="select">
+						<select name="type">
+							<option value="user">Username</option>
+							<option value="tag">Tag</option>
+							<option value="music">Music ID</option>
+							<option value="video">Video ID</option>
+						</select>
+					</div>
+				</div>
+				<div class="control">
+					<button type="submit" class="button is-success">
+						{include '../components/icon.latte', icon: 'search', text: 'Search'}
+					</a>
+				</div>
+			</div>
+		{/block}
+	{/embed}
+	<div class="columns is-centered is-mobile">
+		<div class="column is-narrow">
+			<p>Discover</p>
+			<a class="button is-success" href="{path('/discover')}">Go</a>
+		</div>
+		<div class="column is-narrow">
+			<p>Trending</p>
+			<a class="button is-success" href="{path('/trending')}">Go</a>
+		</div>
+	</div>
+{/block}

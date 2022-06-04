@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    container_name: proxitok-web
+    image: ghcr.io/pablouser1/proxitok:master
+    ports:
+      - 8080:80
+    environment:
+      - LATTE_CACHE=/cache
+      - API_CACHE=redis
+      - REDIS_HOST=proxitok-redis
+      - REDIS_PORT=6379
+      - API_SIGNER_URL=http://proxitok-signer:8080/signature
+    volumes:
+      - proxitok-cache:/cache
+    depends_on:
+      - redis
+      - signer
+  redis:
+    container_name: proxitok-redis
+    image: redis:7-alpine
+    command: redis-server --save 60 1 --loglevel warning
+    restart: unless-stopped
+  signer:
+    container_name: proxitok-signer
+    image: ghcr.io/pablouser1/signtok:master
+volumes:
+  proxitok-cache:
